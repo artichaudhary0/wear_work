@@ -34,16 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
         color: AppColors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: 200,
-              width: 195,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/app_main/app_logo.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 110.0),
+              child: Image.asset("assets/images/app_main/app_logo.png"),
             ),
             BigText(
               text: "WearWork",

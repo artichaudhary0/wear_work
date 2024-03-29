@@ -10,6 +10,7 @@ class SmallText extends StatelessWidget {
   double size;
   FontWeight fontWeight;
   double height;
+
   SmallText({
     super.key,
     this.overflow = TextOverflow.ellipsis,
@@ -26,6 +27,7 @@ class SmallText extends StatelessWidget {
       text,
       overflow: overflow,
       maxLines: 100,
+
       style: GoogleFonts.poppins(
         color: color,
         fontSize: size == 0 ? 12 : size,
