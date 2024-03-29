@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/widgets/big_text.dart';
-
+import 'package:wear_work/widgets/custom_button.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -43,8 +43,7 @@ class OnBoardingScreen extends StatelessWidget {
                     height: 390,
                     width: 280,
                     decoration: const BoxDecoration(),
-                    child:
-                        Image.asset("assets/images/app_main/app_image.png"),
+                    child: Image.asset("assets/images/app_main/app_image.png"),
                   ),
                   const SizedBox(
                     height: 80,
@@ -59,28 +58,15 @@ class OnBoardingScreen extends StatelessWidget {
                     size: 24,
                     fontWeight: FontWeight.w600,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(vertical: 60),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF0600FF),
-                            Color(0xFF0395FF),
-                          ],
-                        )),
-                    child: BigText(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 60),
+                    child: GradientButton(
                       text: "Get Started",
-                      size: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/signUpScreen");
+                      },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

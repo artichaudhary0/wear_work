@@ -6,14 +6,15 @@ import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LoginScreenState extends State<LoginScreen> {
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 40.0),
                   child: BigText(
-                    text: "Sign Up",
+                    text: "Log In",
                     fontWeight: FontWeight.w700,
                   ),
                 )
@@ -40,13 +41,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     const SizedBox(
                       height: 20,
-                    ),
-                    const CustomTextField(
-                      hintText: "User name",
-                      prefixImage: "assets/app_icons/account_icon.png",
-                    ),
-                    const SizedBox(
-                      height: 15,
                     ),
                     const CustomTextField(
                       hintText: "Email Address",
@@ -63,17 +57,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
-                      hintText: "Confirm Password",
-                      prefixImage: "assets/app_icons/password.png",
-                      isPassword: true,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
                     GradientButton(
-                      text: "Sign Up",
+                      text: "Log In",
                       onPressed: () {},
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: isChecked,
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    isChecked = value!;
+                                  },
+                                );
+                              },
+                            ),
+                            SmallText(
+                              text: "Remember me",
+                              size: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blueGrey,
+                            ),
+                          ],
+                        ),
+                        SmallText(
+                          text: "Forget Password",
+                          size: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF00A1FF),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
@@ -149,7 +166,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: BorderStyle.solid,
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     RichText(
                       text: TextSpan(
                         style: GoogleFonts.poppins(
@@ -159,10 +178,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         children: const [
                           TextSpan(
-                            text: "Already have an account?",
+                            text: "Don’t Have an Account?",
                           ),
                           TextSpan(
-                            text: " Log in",
+                            text: " Sign Up",
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -180,5 +199,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+    ;
   }
 }

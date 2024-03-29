@@ -8,4 +8,5 @@ class AppColors{
   static const Color hintColor              =   Color(0xFFA3A3A3);
   static const Color mainBlackColor         =   Color(0xFF000000);
   static const Color white                  =   Color(0xFFFFFFFF);
+  static const Color buttonColor            =   Color(0xFFc0fefd);
 }
