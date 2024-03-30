@@ -3,6 +3,7 @@ import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/cooking_service_screen/widgets/food_type_tile.dart';
 import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
 class PoolCleaningServiceScreen extends StatefulWidget {
@@ -49,24 +50,17 @@ class _PoolCleaningServiceScreenState extends State<PoolCleaningServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+    appBar:   CustomAppBar(
+        title: "Pool Cleaning",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Pool Cleaning",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Padding(
@@ -111,7 +105,9 @@ class _PoolCleaningServiceScreenState extends State<PoolCleaningServiceScreen> {
               ),
             ),
             // const Spacer(),
-            GradientButton(text: "Continue", onPressed: () {}),
+            GradientButton(text: "Continue", onPressed: () {
+              Navigator.pushNamed(context, "/selectDateAndTimeScreen");
+            }),
             const SizedBox(
               height: 40,
             ),

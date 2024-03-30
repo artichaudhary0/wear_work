@@ -3,6 +3,7 @@ import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
 class HireMaidScreen extends StatefulWidget {
@@ -18,24 +19,17 @@ class _HireMaidScreenState extends State<HireMaidScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+      appBar:   CustomAppBar(
+        title: "Personalize Search!",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Personalize Search!",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Padding(
@@ -83,9 +77,18 @@ class _HireMaidScreenState extends State<HireMaidScreen> {
                     selectedGender = v!;
                   });
                 }),
-            Spacer(),
-            GradientButton(text: "Continue", onPressed: (){}),
-            SizedBox(height: 40,)
+            const Spacer(),
+            GradientButton(
+                text: "Continue",
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/selectServiceScreen",
+                  );
+                }),
+            const SizedBox(
+              height: 40,
+            )
           ],
         ),
       ),

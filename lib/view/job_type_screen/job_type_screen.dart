@@ -47,13 +47,14 @@ class _JobTypeScreenState extends State<JobTypeScreen> {
               imagePath: "assets/images/app_main/cleaning supplies.png",
               title: "Looking For A Job ?",
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HireMaidScreen()));
               },
             ),
             JobTypeTile(
               imagePath: "assets/images/app_main/hire_maid.png",
               title: "Hire Maid",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, "/hireMaidScreen");
+              },
             ),
             JobTypeTile(
               imagePath: "assets/images/app_main/blue binoculars.png",

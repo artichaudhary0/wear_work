@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/select_maid/widgets/maid_tile.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
@@ -66,24 +67,17 @@ class _SelectMaidScreenState extends State<SelectMaidScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+      appBar:   CustomAppBar(
+        title: "Select Maid",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Select Maid",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: ListView.builder(
@@ -493,7 +487,9 @@ class _MaidDetailScreenState extends State<MaidDetailScreen> {
               ],
             ),
             SizedBox(height: 20),
-            GradientButton(text: "Continue To Payment", onPressed: () {}),
+            GradientButton(text: "Continue To Payment", onPressed: () {
+              Navigator.pushNamed(context, "/paymentScreen");
+            }),
           ],
         ),
       ),

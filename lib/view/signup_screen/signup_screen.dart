@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wear_work/utils/colors.dart';
@@ -73,7 +74,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     GradientButton(
                       text: "Sign Up",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/locationScreen");
+                      },
                     ),
                     const SizedBox(
                       height: 20,
@@ -149,7 +152,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: BorderStyle.solid,
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     RichText(
                       text: TextSpan(
                         style: GoogleFonts.poppins(
@@ -157,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fontSize: 12,
                           color: AppColors.borderColor,
                         ),
-                        children: const [
+                        children: [
                           TextSpan(
                             text: "Already have an account?",
                           ),
@@ -168,6 +173,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontSize: 12,
                               color: Colors.blue,
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(context, "/loginScreen");
+                              },
                           ),
                         ],
                       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wear_work/utils/colors.dart';
@@ -59,7 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GradientButton(
                       text: "Log In",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/locationScreen");
+                      },
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,11 +87,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        SmallText(
-                          text: "Forget Password",
-                          size: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF00A1FF),
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, "/forgetPasswordScreen");
+                          },
+                          child: SmallText(
+                            text: "Forget Password",
+                            size: 12,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF00A1FF),
+                          ),
                         ),
                       ],
                     ),
@@ -176,17 +184,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 12,
                           color: AppColors.borderColor,
                         ),
-                        children: const [
-                          TextSpan(
+                        children:  [
+                          const TextSpan(
                             text: "Don’t Have an Account?",
                           ),
                           TextSpan(
                             text: " Sign Up",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                               color: Colors.blue,
                             ),
+                            recognizer:  TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(context, "/signUpScreen");
+                              },
                           ),
                         ],
                       ),
