@@ -1,54 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/cooking_service_screen/widgets/food_type_tile.dart';
+import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
-class EventCleaningServiceScreen extends StatefulWidget {
-  const EventCleaningServiceScreen({super.key});
+
+class BabyCareScreen extends StatefulWidget {
+  const BabyCareScreen({super.key});
 
   @override
-  State<EventCleaningServiceScreen> createState() =>
-      _EventCleaningServiceScreenState();
+  State<BabyCareScreen> createState() => _BabyCareScreenState();
 }
 
-class _EventCleaningServiceScreenState
-    extends State<EventCleaningServiceScreen> {
-  final List<Map<String, dynamic>> foodTilesData = [
+class _BabyCareScreenState extends State<BabyCareScreen> {
+  final List<Map<String, dynamic>> babyTilesData = [
     {
-      'imagePath': 'assets/images/event_cleaning/general cleaning.png',
-      'foodType': 'General Cleaning',
+      'imagePath': 'assets/images/baby/baby bathing.png',
+      'serviceType': 'Baby Bathing',
     },
     {
-      'imagePath': 'assets/images/event_cleaning/trash removal.png',
-      'foodType': 'Trash Removal',
+      'imagePath': 'assets/images/baby/baby massage.png',
+      'serviceType': 'Baby Massage',
     },
     {
-      'imagePath': 'assets/images/event_cleaning/bathroom cleaning.png',
-      'foodType': 'Bathroom Cleaning',
+      'imagePath': 'assets/images/baby/changing diaper.png',
+      'serviceType': 'Changing Diaper',
     },
     {
-      'imagePath': 'assets/images/event_cleaning/room cleaning.png',
-      'foodType': 'Kitchen Area Cleaning',
+      'imagePath': 'assets/images/baby/potty training.png',
+      'serviceType': 'Potty Training',
     },
     {
-      'imagePath': 'assets/images/event_cleaning/decoration cleaning.png',
-      'foodType': 'Decoration Cleaning',
+      'imagePath': 'assets/images/baby/cleaing baby utensil.png',
+      'serviceType': 'Cleaning Baby Utensil',
     },
     {
-      'imagePath': 'assets/images/event_cleaning/furniture arrangement.png',
-      'foodType': 'Furniture Arrangement.png',
+      'imagePath': 'assets/images/baby/baby food.png',
+      'serviceType': 'Baby Food',
+    },{
+      'imagePath': 'assets/images/baby/washing baby cloth.png',
+      'serviceType': 'Washing Baby Cloth',
+    },{
+      'imagePath': 'assets/images/baby/baby feeding.png',
+      'serviceType': 'Baby Feeding',
+    },{
+      'imagePath': 'assets/images/baby/baby walk.png',
+      'serviceType': 'Baby Walk',
     },
   ];
   Map<String, bool> selectedTiles = {};
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Event Cleaning",
+        title: "Baby Sitter",
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -60,25 +67,34 @@ class _EventCleaningServiceScreenState
           ),
         ),
       ),
-      body: Padding(
+      body:Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BigText(
-              text: "Select Your Needs",
+              text: "About Baby",
               fontWeight: FontWeight.w600,
               size: 20,
+            ),
+            const Divider(),
+            const SearchFilterRow(
+              title: 'Age',
+              ageRange: "20 to 300",
+            ),
+            const SearchFilterRow(
+              title: 'Gender',
+              ageRange: "Female",
             ),
             const Divider(),
 
             Expanded(
               child: ListView.builder(
-                itemCount: foodTilesData.length,
+                itemCount: babyTilesData.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final Map<String, dynamic> tileData = foodTilesData[index];
+                  final Map<String, dynamic> tileData = babyTilesData[index];
                   final String imagePath = tileData['imagePath'];
-                  final String foodType = tileData['foodType'];
+                  final String foodType = tileData['serviceType'];
                   final isSelected = selectedTiles.containsKey(foodType)
                       ? selectedTiles[foodType]!
                       : false;
@@ -96,7 +112,6 @@ class _EventCleaningServiceScreenState
                 },
               ),
             ),
-            // const Spacer(),
             GradientButton(text: "Continue", onPressed: () {}),
             const SizedBox(
               height: 40,

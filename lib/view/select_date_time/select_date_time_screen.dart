@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
@@ -22,24 +23,17 @@ class _SelectDateAndTimeState extends State<SelectDateAndTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+      appBar:   CustomAppBar(
+        title: "Select Date & time",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Select Date & time",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Padding(
@@ -48,7 +42,7 @@ class _SelectDateAndTimeState extends State<SelectDateAndTime> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BigText(
-              text: "Select Vehicle Type",
+              text: "Select Duration",
               fontWeight: FontWeight.w600,
               size: 20,
             ),
@@ -190,7 +184,9 @@ class _SelectDateAndTimeState extends State<SelectDateAndTime> {
 
 
             const Spacer(),
-            GradientButton(text: "Continue", onPressed: () {}),
+            GradientButton(text: "Continue", onPressed: () {
+              Navigator.pushNamed(context, "/selectMaidScreen");
+            }),
             const SizedBox(
               height: 40,
             ),

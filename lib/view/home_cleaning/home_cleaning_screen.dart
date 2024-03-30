@@ -3,6 +3,7 @@ import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/cooking_service_screen/widgets/food_type_tile.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
 class HomeCleaningServiceScreen extends StatefulWidget {
@@ -44,24 +45,17 @@ class _HomeCleaningServiceScreenState extends State<HomeCleaningServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+      appBar:   CustomAppBar(
+        title: "Cleaning",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Cleaning",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Padding(

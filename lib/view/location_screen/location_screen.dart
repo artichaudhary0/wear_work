@@ -50,7 +50,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: [
                   GradientButton(
                     text: "Enable Device Location",
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/jobTypeScreen");
+                    },
                   ),
                   GradientButton(
                     text: "Enter Location Manually",

@@ -8,6 +8,7 @@ import 'package:wear_work/view/cooking_service_screen/widgets/food_type_tile.dar
 import 'package:wear_work/view/cooking_service_screen/widgets/meal-tile.dart';
 import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
 import '../../widgets/small_text.dart';
@@ -72,24 +73,17 @@ class _CookingServiceScreenState extends State<CookingServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 28,
-              color: AppColors.mainColor,
-            ),
+      appBar:   CustomAppBar(
+        title: "Cooking",
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 28,
+            color: AppColors.mainColor,
           ),
-        ),
-        title: BigText(
-          text: "Personalize Search!",
-          size: 28,
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Padding(
@@ -97,14 +91,6 @@ class _CookingServiceScreenState extends State<CookingServiceScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SearchFilterRow(
-              title: 'Age',
-              ageRange: "20 to 300",
-            ),
-            const SearchFilterRow(
-              title: 'Religion',
-              ageRange: "Hindu",
-            ),
             BigText(
               text: "Food Selection",
               fontWeight: FontWeight.w600,
