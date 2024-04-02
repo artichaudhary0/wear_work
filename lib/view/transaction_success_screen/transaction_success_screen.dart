@@ -105,7 +105,9 @@ class TransactionSuccessScreen extends StatelessWidget {
               value: "+91 9876543211",
             ),
             const Spacer(),
-            GradientButton(text: "Continue Browsing", onPressed: () {}),
+            GradientButton(text: "Continue Browsing", onPressed: () {
+              Navigator.pushNamed(context, "/browseMaidMainScreen");
+            }),
             const SizedBox(
               height: 40,
             ),

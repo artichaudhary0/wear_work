@@ -3,7 +3,6 @@ import 'package:wear_work/view/hire_maid/hire_maid.dart';
 import 'package:wear_work/view/job_type_screen/widget/jobtype_tile.dart';
 import 'package:wear_work/widgets/big_text.dart';
 
-
 class JobTypeScreen extends StatefulWidget {
   const JobTypeScreen({super.key});
 
@@ -42,11 +41,14 @@ class _JobTypeScreenState extends State<JobTypeScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             JobTypeTile(
               imagePath: "assets/images/app_main/cleaning supplies.png",
               title: "Looking For A Job ?",
               onTap: () {
+                Navigator.pushNamed(context, "/maidRegistrationScreen");
               },
             ),
             JobTypeTile(
@@ -59,13 +61,15 @@ class _JobTypeScreenState extends State<JobTypeScreen> {
             JobTypeTile(
               imagePath: "assets/images/app_main/blue binoculars.png",
               title: "Browse Maid",
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, "/browseMaidMainScreen");
+              },
             ),
             const Spacer(),
             Align(
               alignment: Alignment.bottomRight,
-              child: Image.asset("assets/images/app_main/meshGradientSecond.png"
-                ,
+              child: Image.asset(
+                "assets/images/app_main/meshGradientSecond.png",
                 fit: BoxFit.cover,
               ),
             ),

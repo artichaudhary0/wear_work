@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,12 +163,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: AppColors.borderColor,
                         ),
                         children: [
-                          TextSpan(
+                          const TextSpan(
                             text: "Already have an account?",
                           ),
                           TextSpan(
                             text: " Log in",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                               color: Colors.blue,
@@ -180,6 +180,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),

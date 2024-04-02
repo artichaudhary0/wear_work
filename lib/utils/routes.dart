@@ -9,6 +9,7 @@ import 'package:wear_work/view/home_cleaning/home_cleaning_screen.dart';
 import 'package:wear_work/view/job_type_screen/job_type_screen.dart';
 import 'package:wear_work/view/location_screen/location_screen.dart';
 import 'package:wear_work/view/login_screen/login_screen.dart';
+import 'package:wear_work/view/maid_regestration/maid_regestration.dart';
 import 'package:wear_work/view/on_boarding/on_boarding.dart';
 import 'package:wear_work/view/payment_screen/payment_screen.dart';
 import 'package:wear_work/view/pool_cleaning/pool_cleaning_screen.dart';
@@ -18,6 +19,12 @@ import 'package:wear_work/view/signup_screen/signup_screen.dart';
 import 'package:wear_work/view/splash_screen/splash_screen.dart';
 import 'package:wear_work/view/transaction_success_screen/transaction_success_screen.dart';
 import 'package:wear_work/view/vehicle_washing/vehicle_washing_screen.dart';
+
+import '../view/browse_home_screen/browse_home_screen.dart';
+import '../view/browse_maid/browse_main_screen.dart';
+import '../view/browse_maid_before_after_screen/browse_maid_before_after_screen.dart';
+import '../view/browse_maid_profile_screen/browse_maid_profile_screen.dart';
+import '../view/browse_maid_search_screen/browse_maid_search_screen.dart';
 
 class OnGenerateRouting {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -99,6 +106,30 @@ class OnGenerateRouting {
       case "/transactionSuccessScreen":
         return MaterialPageRoute(
           builder: (context) => const TransactionSuccessScreen(),
+        );
+      case "/maidRegistrationScreen":
+        return MaterialPageRoute(
+          builder: (context) => const MaidRegistrationScreen(),
+        );
+      case "/browseMaidMainScreen":
+        return MaterialPageRoute(
+          builder: (context) => const BrowseMaidMainScreen(),
+        );
+      case "/browseMaidBeforeAfterScreen":
+        return MaterialPageRoute(
+          builder: (context) => const BrowseMaidBeforeAfterScreen(),
+        );
+      case "/browseMaidProfileScreen":
+        return MaterialPageRoute(
+          builder: (context) => const BrowseMaidProfileScreen(),
+        );
+      case "/browseMaidSearchScreen":
+        return MaterialPageRoute(
+          builder: (context) => const BrowseMaidSearchScreen(),
+        );
+      case "/browseMaidHomeScreen":
+        return MaterialPageRoute(
+          builder: (context) => const BrowseMaidHomeScreen(),
         );
 
       default:

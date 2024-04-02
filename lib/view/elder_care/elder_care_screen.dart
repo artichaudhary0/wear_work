@@ -67,26 +67,6 @@ class _ElderCareScreenState extends State<ElderCareScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: false,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(left: 15.0),
-      //     child: IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(
-      //         Icons.arrow_back_ios,
-      //         size: 28,
-      //         color: AppColors.mainColor,
-      //       ),
-      //     ),
-      //   ),
-      //   title: BigText(
-      //     text: "Elder Care",
-      //     size: 28,
-      //     fontWeight: FontWeight.w700,
-      //   ),
-      // ),
       appBar:   CustomAppBar(
         title:"Elder Care",
         leading: IconButton(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/widgets/small_text.dart';
@@ -8,7 +7,8 @@ class SearchFilterRow extends StatelessWidget {
   final String ageRange;
   const SearchFilterRow({
     required this.title,
-    super.key, required this.ageRange,
+    super.key,
+    required this.ageRange,
   });
 
   @override
@@ -27,15 +27,16 @@ class SearchFilterRow extends StatelessWidget {
           Container(
             width: 120,
             alignment: Alignment.center,
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(color: AppColors.lightBlue,
-                borderRadius: BorderRadius.circular(24)),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.lightBlue,
+              borderRadius: BorderRadius.circular(24),
+            ),
             child: SmallText(
               text: ageRange,
               color: AppColors.white,
               size: 14,
               fontWeight: FontWeight.w400,
-
             ),
           ),
         ],

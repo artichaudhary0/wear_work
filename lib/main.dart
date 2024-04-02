@@ -1,7 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wear_work/firebase_options.dart';
 import 'package:wear_work/utils/routes.dart';
 
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const MyApp(),
   );
@@ -19,8 +26,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      // home: const MaidRegistrationScreen(),
-      initialRoute: "/maidRegistrationScreen",
+      initialRoute: "/splashScreen",
       onGenerateRoute: OnGenerateRouting.onGenerateRoute,
     );
   }
