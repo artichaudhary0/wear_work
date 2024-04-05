@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wear_work/view/baby_care/baby_care_screen.dart';
+import 'package:wear_work/view/change_password_screen/change_password_screen.dart';
 import 'package:wear_work/view/cooking_service_screen/cooking_service_screen.dart';
+import 'package:wear_work/view/edit_profile_screen/edit_profile_screen.dart';
 import 'package:wear_work/view/elder_care/elder_care_screen.dart';
 import 'package:wear_work/view/event_cleaning/event_cleaning_screen.dart';
+import 'package:wear_work/view/help_desk/help_desk.dart';
 import 'package:wear_work/view/hire_maid/hire_maid.dart';
 import 'package:wear_work/view/hire_maid/select_service/select_service.dart';
 import 'package:wear_work/view/home_cleaning/home_cleaning_screen.dart';
@@ -130,6 +133,18 @@ class OnGenerateRouting {
       case "/browseMaidHomeScreen":
         return MaterialPageRoute(
           builder: (context) => const BrowseMaidHomeScreen(),
+        );
+      case "/helpDiskScreen":
+        return MaterialPageRoute(
+          builder: (context) => const HelpDiskScreen(),
+        );
+      case "/editProfileScreen":
+        return MaterialPageRoute(
+          builder: (context) => const EditProfileScreen(),
+        );
+      case "/changePasswordScreen":
+        return MaterialPageRoute(
+          builder: (context) => const ChangePasswordScreen(),
         );
 
       default:

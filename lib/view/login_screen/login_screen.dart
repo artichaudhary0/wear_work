@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/view/job_type_screen/job_type_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
@@ -15,7 +17,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isChecked = false;
+  AuthRepository authRepository = AuthRepository();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +49,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: emailController,
                       hintText: "Email Address",
                       prefixImage: "assets/app_icons/mail_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: passwordController,
                       hintText: "Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
@@ -61,7 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     GradientButton(
                       text: "Log In",
                       onPressed: () {
-                        Navigator.pushNamed(context, "/locationScreen");
+                        authRepository.signIn(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          context,
+                        );
                       },
                     ),
                     Row(
@@ -88,8 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.pushNamed(context, "/forgetPasswordScreen");
+                          onTap: () {
+                            // Navigator.pushNamed(
+                            //     context, "/forgetPasswordScreen");
                           },
                           child: SmallText(
                             text: "Forget Password",
@@ -184,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 12,
                           color: AppColors.borderColor,
                         ),
-                        children:  [
+                        children: [
                           const TextSpan(
                             text: "Don’t Have an Account?",
                           ),
@@ -195,9 +208,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 12,
                               color: Colors.blue,
                             ),
-                            recognizer:  TapGestureRecognizer()
+                            recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, "/signUpScreen");
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>JobTypeScreen()));
+                                // Navigator.pushNamed(context, "/signUpScreen");
                               },
                           ),
                         ],

@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/view/login_screen/login_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
@@ -15,6 +17,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController cpasswordController = TextEditingController();
+
+  AuthRepository authRepository = AuthRepository();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,21 +51,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: usernameController,
                       hintText: "User name",
                       prefixImage: "assets/app_icons/account_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: emailController,
                       hintText: "Email Address",
                       prefixImage: "assets/app_icons/mail_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: passwordController,
                       hintText: "Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
@@ -64,7 +76,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: cpasswordController,
                       hintText: "Confirm Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
@@ -75,7 +88,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     GradientButton(
                       text: "Sign Up",
                       onPressed: () {
-                        Navigator.pushNamed(context, "/locationScreen");
+                        authRepository.signUp(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          cpasswordController.text.trim(),
+                          usernameController.text.trim(),
+                          context,
+                        );
                       },
                     ),
                     const SizedBox(
@@ -175,7 +194,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, "/loginScreen");
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                // Navigator.pushNamed(context, "/loginScreen");
                               },
                           ),
                         ],

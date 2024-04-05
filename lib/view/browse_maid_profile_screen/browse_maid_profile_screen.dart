@@ -1,9 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/widgets/big_text.dart';
+import 'package:wear_work/widgets/small_text.dart';
 
-class BrowseMaidProfileScreen extends StatelessWidget {
+class BrowseMaidProfileScreen extends StatefulWidget {
   const BrowseMaidProfileScreen({super.key});
+
+  @override
+  State<BrowseMaidProfileScreen> createState() =>
+      _BrowseMaidProfileScreenState();
+}
+
+class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
+  String _selectedValue = '1';
+  AuthRepository authRepository = AuthRepository();
+   String _userName = '';
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  Future<void> fetchUserName() async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot userSnapshot =
+      await _firebaseFirestore.collection('users').doc(uid).get();
+      setState(() {
+        _userName = userSnapshot['userName'];
+      });
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +60,7 @@ class BrowseMaidProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BigText(
-                        text: "Kavya Padukon",
+                        text: _userName ?? 'sas',
                         color: AppColors.mainBlackColor,
                         fontWeight: FontWeight.w500,
                         size: 20,
@@ -66,10 +95,53 @@ class BrowseMaidProfileScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  const Icon(
-                    Icons.more_vert,
-                    color: AppColors.mainColor,
-                  )
+                  IconButton(
+                    onPressed: () async {
+                      final value = await showMenu<String>(
+                        context: context,
+                        position: const RelativeRect.fromLTRB(100, 100, 0, 0),
+                        items: [
+                          buildPopupMenuItem(
+                            icon: CupertinoIcons.person,
+                            text: "Edit Profile",
+                            onTap: () => Navigator.pushNamed(
+                                context, "/editProfileScreen"),
+                          ),
+                          buildPopupMenuItem(
+                            icon: CupertinoIcons.lock,
+                            text: "Change Password",
+                            onTap: () => Navigator.pushNamed(
+                                context, "/changePasswordScreen"),
+                          ),
+                          buildPopupMenuItem(
+                            icon: Icons.help_outline,
+                            text: "Help And Support",
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/helpDiskScreen"),
+                          ),
+                          buildPopupMenuItem(
+                            icon: Icons.menu,
+                            text: "Main Menu",
+                            onTap: () =>  Navigator.pushNamed(context, "/jobTypeScreen"),
+                          ),
+                          buildPopupMenuItem(
+                            icon: Icons.logout,
+                            text: "Logout",
+                            onTap: () => authRepository.signOut(context),
+                          ),
+                        ],
+                      );
+                      if (value != null) {
+                        setState(() {
+                          _selectedValue = value;
+                        });
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.more_vert,
+                      color: AppColors.mainColor,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -84,13 +156,9 @@ class BrowseMaidProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Divider(),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.zero,
@@ -123,10 +191,10 @@ class CountWidget extends StatelessWidget {
   final String label;
 
   const CountWidget({
-    Key? key,
+    super.key,
     required this.count,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -151,4 +219,31 @@ class CountWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+PopupMenuItem<String> buildPopupMenuItem({
+  required IconData icon,
+  required String text,
+  required VoidCallback onTap,
+}) {
+  return PopupMenuItem(
+    value: text,
+    child: GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: AppColors.mainColor,
+          ),
+          const SizedBox(width: 10),
+          SmallText(
+            text: text,
+            size: 18,
+            color: AppColors.mainBlackColor,
+          ),
+        ],
+      ),
+    ),
+  );
 }

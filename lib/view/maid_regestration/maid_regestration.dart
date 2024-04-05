@@ -1,6 +1,10 @@
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
+import 'package:wear_work/utils/extension.dart';
+
+import '';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
@@ -82,6 +86,50 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
   WorkingTime? selectedWorkingTime = WorkingTime.morning;
   final List<String> languages = ['English', 'Hindi', 'Gujarati', "Tamil"];
 
+  Uint8List? _pickedProfileImage;
+  Uint8List? _pickedAadharImage;
+  Uint8List? _pickedVoterIdImage;
+  Uint8List? _pickedCovidCertificateImage;
+  void selectProfileImage() async {
+    Uint8List pickedImagePath =
+        await AppExtension.pickedImage(imageSource: ImageSource.gallery);
+    if (pickedImagePath != null) {
+      setState(() {
+        _pickedProfileImage = pickedImagePath;
+      });
+    }
+  }
+
+  void selectAadharImage() async {
+    Uint8List pickedImagePath =
+        await AppExtension.pickedImage(imageSource: ImageSource.gallery);
+    if (pickedImagePath != null) {
+      setState(() {
+        _pickedAadharImage = pickedImagePath;
+      });
+    }
+  }
+
+  void selectVoterIdImage() async {
+    Uint8List pickedImagePath =
+        await AppExtension.pickedImage(imageSource: ImageSource.gallery);
+    if (pickedImagePath != null) {
+      setState(() {
+        _pickedVoterIdImage = pickedImagePath;
+      });
+    }
+  }
+
+  void selectCovidCertificateImage() async {
+    Uint8List pickedImagePath =
+        await AppExtension.pickedImage(imageSource: ImageSource.gallery);
+    if (pickedImagePath != null) {
+      setState(() {
+        _pickedCovidCertificateImage = pickedImagePath;
+      });
+    }
+  }
+
   List<Step> stepList() => [
         Step(
           state:
@@ -93,31 +141,40 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
             children: [
               Stack(
                 children: [
-                  const CircleAvatar(
-                    backgroundImage:
-                        AssetImage("assets/images/maid/maid 2.png"),
-                    radius: 60,
-                  ),
+                  _pickedProfileImage != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(
+                            _pickedProfileImage!,
+                          ),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage:
+                              AssetImage("assets/app_icons/profile2.png"),
+                        ),
                   Positioned(
-                    bottom: 5,
-                    right: 0,
+                    bottom: 0,
+                    right: 5,
                     child: Container(
                       height: 30,
                       width: 30,
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: AppColors.lightBlue),
-                      child: const Icon(
-                        Icons.edit,
-                        color: AppColors.white,
-                        size: 18,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: selectProfileImage,
+                        icon: const Icon(
+                          color: AppColors.white,
+                          Icons.edit,
+                          size: 18,
+                        ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               TextField(
                 controller: firstName,
                 textInputAction: TextInputAction.next,
@@ -131,9 +188,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                   labelText: 'First Name',
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               TextField(
                 controller: lastName,
                 textInputAction: TextInputAction.next,
@@ -162,9 +217,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                   labelText: 'Phone Number',
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Divider(),
               const SizedBox(
                 height: 12,
@@ -186,9 +239,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                 size: 20,
               ),
               const Divider(),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               Container(
                 height: 100,
                 width: double.infinity,
@@ -203,7 +254,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                       },
                     );
                   },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     mainAxisSpacing: 1,
                     crossAxisSpacing: 1,
@@ -217,12 +268,8 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                 size: 20,
               ),
               const Divider(),
-              SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               RadioListTile(
                 contentPadding: EdgeInsets.zero,
                 title: SmallText(
@@ -282,98 +329,20 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
           title: const Text('Confirm'),
           content: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: 190.0,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3FDFE),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color(0xFF9DF6FF),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.add_circle,
-                      size: 57,
-                      color: AppColors.lightBlue,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BigText(
-                      text: "Aadhar Card",
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                      size: 16,
-                    )
-                  ],
-                ),
+              buildImageContainer(
+                image: _pickedAadharImage,
+                text: "Aadhar Card",
+                onPressed: selectAadharImage,
               ),
-              Container(
-                width: double.infinity,
-                height: 190,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3FDFE),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color(0xFF9DF6FF),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.add_circle,
-                      size: 57,
-                      color: AppColors.lightBlue,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BigText(
-                      text: "Voter Id",
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                      size: 16,
-                    )
-                  ],
-                ),
+              buildImageContainer(
+                image: _pickedVoterIdImage,
+                text: "Voter ID",
+                onPressed: selectVoterIdImage,
               ),
-              Container(
-                width: double.infinity,
-                height: 190,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3FDFE),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color(0xFF9DF6FF),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.add_circle,
-                      size: 57,
-                      color: AppColors.lightBlue,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BigText(
-                      text: "COVID-19 Vaccination Certificate",
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                      size: 16,
-                    )
-                  ],
-                ),
+              buildImageContainer(
+                image: _pickedCovidCertificateImage,
+                text: "COVID-19",
+                onPressed: selectCovidCertificateImage,
               ),
             ],
           ),
@@ -461,4 +430,84 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
       ),
     );
   }
+}
+
+Widget buildImageContainer({
+  required Uint8List? image,
+  required String text,
+  required VoidCallback onPressed,
+}) {
+  return Container(
+    width: double.infinity,
+    height: 190,
+    margin: const EdgeInsets.symmetric(vertical: 10),
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3FDFE),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(
+        color: const Color(0xFF9DF6FF),
+      ),
+    ),
+    child: image != null
+        ? Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: MemoryImage(image),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 140,
+                top: 30,
+                child: Column(
+                  children: [
+                    IconButton(
+                      onPressed: onPressed,
+                      icon: const Icon(
+                        Icons.add_circle,
+                        size: 57,
+                        color: AppColors.lightBlue,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BigText(
+                      text: text,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightBlue,
+                      size: 16,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: onPressed,
+                icon: const Icon(
+                  Icons.add_circle,
+                  size: 57,
+                  color: AppColors.lightBlue,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BigText(
+                text: text,
+                fontWeight: FontWeight.w500,
+                color: AppColors.lightBlue,
+                size: 16,
+              )
+            ],
+          ),
+  );
 }
