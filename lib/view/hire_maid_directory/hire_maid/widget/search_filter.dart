@@ -52,11 +52,20 @@ class _SearchFilterRowState extends State<SearchFilterRow> {
                 color: AppColors.lightBlue,
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: SmallText(
-                text: "$selectedValue  ^",
-                color: AppColors.white,
-                size: 14,
-                fontWeight: FontWeight.w400,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SmallText(
+                    text: "$selectedValue ",
+                    color: AppColors.white,
+                    size: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Colors.white,
+                  )
+                ],
               ),
             ),
           ),

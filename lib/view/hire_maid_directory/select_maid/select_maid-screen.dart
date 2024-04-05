@@ -54,7 +54,7 @@ class _SelectMaidScreenState extends State<SelectMaidScreen> {
                                   builder: (context) => MaidDetailScreen(
                                     profileImage:
                                         "assets/images/maid/maid 1.png",
-                                    name: "jcj",
+                                    name: userMap["userName"],
                                     location: "Mathura",
                                     price: 200,
                                   ),

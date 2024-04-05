@@ -123,7 +123,7 @@ class OnGenerateRouting {
         );
       case "/browseMaidProfileScreen":
         return MaterialPageRoute(
-          builder: (context) => const BrowseMaidProfileScreen(),
+          builder: (context) =>  BrowseMaidProfileScreen(),
         );
       case "/browseMaidSearchScreen":
         return MaterialPageRoute(

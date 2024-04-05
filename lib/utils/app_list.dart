@@ -290,11 +290,29 @@ class AppLists {
     '80-90',
     '90-100',
   ];
+  final List<String> babyAgeOption = [
+    '0-1',
+    '1-2',
+    '2-3',
+    '3-4',
+    '4-5',
+    '5-6',
+    '6-7',
+    '7-8',
+    '8-9',
+    '9-10',
+    '10+',
+  ];
   final List<String> religion = [
     'Hindu',
     'Muslim',
     'Christian',
     'Sikh',
     'Other',
+  ];
+  final List<String> gender = [
+    'Female',
+    'Male',
+    'Others',
   ];
 }

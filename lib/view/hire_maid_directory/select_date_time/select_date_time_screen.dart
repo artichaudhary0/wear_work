@@ -17,10 +17,6 @@ class SelectDateAndTime extends StatefulWidget {
 }
 
 class _SelectDateAndTimeState extends State<SelectDateAndTime> {
-
-
-
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,

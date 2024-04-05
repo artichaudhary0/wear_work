@@ -18,10 +18,6 @@ class CookingServiceScreen extends StatefulWidget {
 }
 
 class _CookingServiceScreenState extends State<CookingServiceScreen> {
-  FoodType? selectedFood = FoodType.veg;
-  bool mealType1 = false;
-  bool mealType2 = false;
-  bool mealType3 = false;
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -32,8 +28,6 @@ class _CookingServiceScreenState extends State<CookingServiceScreen> {
     },
   );
   AppLists foodTypeList = AppLists();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +126,8 @@ class _CookingServiceScreenState extends State<CookingServiceScreen> {
               child: ListView.builder(
                 itemCount: foodTypeList.foodTilesData.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final Map<String, dynamic> tileData = foodTypeList.foodTilesData[index];
+                  final Map<String, dynamic> tileData =
+                      foodTypeList.foodTilesData[index];
                   final String imagePath = tileData['imagePath'];
                   final String foodType = tileData['foodType'];
                   final isSelected = foodTypeSelectedTiles.containsKey(foodType)

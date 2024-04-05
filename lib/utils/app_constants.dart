@@ -47,3 +47,9 @@ void addSkill(Skill skill) {
 void removeSkill(Skill skill) {
   selectedSkills.remove(skill);
 }
+
+enum UserType {
+  Hiring,
+  Registration,
+  Browsing,
+}

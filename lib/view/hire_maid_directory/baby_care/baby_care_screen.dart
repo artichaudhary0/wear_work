@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/app_list.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/utils/global_values.dart';
@@ -9,14 +10,13 @@ import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 
 class BabyCareScreen extends StatefulWidget {
-  const BabyCareScreen({super.key});
+  const BabyCareScreen({Key? key}) : super(key: key);
 
   @override
   State<BabyCareScreen> createState() => _BabyCareScreenState();
 }
 
 class _BabyCareScreenState extends State<BabyCareScreen> {
-
   AppLists babyTiles = AppLists();
 
   @override
@@ -46,27 +46,15 @@ class _BabyCareScreenState extends State<BabyCareScreen> {
               size: 20,
             ),
             const Divider(),
-            const SearchFilterRow(
+            SearchFilterRow(
               title: 'Age',
               initialValue: '0-1', // Initial age range
-              options: [
-                '0-1',
-                '1-2',
-                '2-3',
-                '3-4',
-                '4-5',
-                '5-6',
-                '6-7',
-                '7-8',
-                '8-9',
-                '9-10',
-                '10+',
-              ],
+              options: babyTiles.babyAgeOption,
             ),
-            const SearchFilterRow(
+            SearchFilterRow(
               title: 'Gender',
               initialValue: 'Female', // Initial gender
-              options: ['Male', 'Female', 'Other'], // Gender options
+              options: babyTiles.gender,
             ),
             const Divider(),
             Expanded(
@@ -98,7 +86,14 @@ class _BabyCareScreenState extends State<BabyCareScreen> {
               text: "Continue",
               onPressed: () {
                 Navigator.pushNamed(context, "/selectDateAndTimeScreen");
+                if (currentUserType == UserType.Hiring) {
+                  hiringSelectedTiles.addAll(babySelectedTiles);
+                } else if (currentUserType == UserType.Registration) {
+                  registrationSelectedTiles.addAll(babySelectedTiles);
+                }
                 print(babySelectedTiles);
+                print(hiringSelectedTiles);
+                print(registrationSelectedTiles);
               },
             ),
             const SizedBox(

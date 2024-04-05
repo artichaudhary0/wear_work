@@ -19,7 +19,7 @@ class ElderCareScreen extends StatefulWidget {
 }
 
 class _ElderCareScreenState extends State<ElderCareScreen> {
-  BedRidden? selectedFood = BedRidden.yes;
+  BedRidden? selectedRiddenType = BedRidden.yes;
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -54,26 +54,15 @@ class _ElderCareScreenState extends State<ElderCareScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SearchFilterRow(
+             SearchFilterRow(
               title: 'Age',
               initialValue: '40-50', // Initial age range
-              options: [
-                '0-10',
-                '10-20',
-                '20-30',
-                '30-40',
-                '40-50',
-                '50-60',
-                '60-70',
-                '70-80',
-                '80-90',
-                '90-100',
-              ], // Age range options
+              options: elderTileList.ageOption,
             ),
-            const SearchFilterRow(
+             SearchFilterRow(
               title: 'Gender',
               initialValue: 'Female', // Initial gender
-              options: ['Male', 'Female', 'Other'], // Gender options
+              options: elderTileList.gender // Gender options
             ),
             BigText(
               text: "Is He/She Bed Ridden?",
@@ -91,10 +80,10 @@ class _ElderCareScreenState extends State<ElderCareScreen> {
               ),
               dense: true,
               value: BedRidden.yes,
-              groupValue: selectedFood,
+              groupValue: selectedRiddenType,
               onChanged: (v) {
                 setState(() {
-                  selectedFood = v!;
+                  selectedRiddenType = v!;
                 });
               },
             ),
@@ -108,10 +97,10 @@ class _ElderCareScreenState extends State<ElderCareScreen> {
                   fontWeight: FontWeight.w400,
                 ),
                 dense: true,
-                groupValue: selectedFood,
+                groupValue: selectedRiddenType,
                 onChanged: (v) {
                   setState(() {
-                    selectedFood = v!;
+                    selectedRiddenType = v!;
                   });
                 }),
 

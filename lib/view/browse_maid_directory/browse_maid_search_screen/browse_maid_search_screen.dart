@@ -1,119 +1,140 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wear_work/utils/colors.dart';
-import 'package:wear_work/widgets/big_text.dart';
-import 'package:wear_work/widgets/custom_button.dart';
-import 'package:wear_work/widgets/small_text.dart';
 
-class BrowseMaidSearchScreen extends StatelessWidget {
+import '../browse_maid_profile_screen/browse_maid_profile_screen.dart';
+
+class BrowseMaidSearchScreen extends StatefulWidget {
   const BrowseMaidSearchScreen({super.key});
 
   @override
+  State<BrowseMaidSearchScreen> createState() => _BrowseMaidSearchScreenState();
+}
+
+class _BrowseMaidSearchScreenState extends State<BrowseMaidSearchScreen> {
+  final TextEditingController searchController = TextEditingController();
+  bool isShowUsers = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 40,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Form(
+          child: TextFormField(
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'Search for a user...',
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: const BorderSide(
+                  color: AppColors.borderColor,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: const BorderSide(
+                  color: AppColors.borderColor,
+                ),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: const BorderSide(
+                  color: AppColors.borderColor,
+                ),
+              ),
+            ),
+            onFieldSubmitted: (String _) {
+              setState(() {
+                isShowUsers = true;
+              });
+            },
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Flexible(
-                  flex: 2,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search",
-                      prefixIcon: const Icon(
-                        CupertinoIcons.search,
+      ),
+      body: Column(
+        children: [
+
+          const Divider(),
+          const SizedBox(height: 10,),
+          isShowUsers
+              ? FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection('users')
+                      .where(
+                        'username',
+                        isGreaterThanOrEqualTo: searchController.text,
+                      )
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>  BrowseMaidProfileScreen(
+                                    uid: (snapshot.data! as dynamic).docs[index]['uid'],
+                                    ),
+                              ),
+                            ),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  (snapshot.data! as dynamic).docs[index]
+                                      ['photoUrl'],
+                                ),
+                                radius: 16,
+                              ),
+                              title: Text(
+                                (snapshot.data! as dynamic).docs[index]
+                                    ['username'],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
+                    );
+                  },
+                )
+              : FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection('posts')
+                      .orderBy('datePublish')
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Expanded(
+                      child: MasonryGridView.count(
+                        crossAxisCount: 3,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) => Container(
+                          height: 200,
+                          width: 200,
+                          child: Image.network(
+                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        mainAxisSpacing: 8.0,
+                        crossAxisSpacing: 8.0,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  flex: 1,
-                  child: GradientButton(
-                    onPressed: () {},
-                    text: 'Cancel',
-                    height: 40,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            BigText(
-              text: "History",
-              fontWeight: FontWeight.w600,
-              size: 24,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              margin: const EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ),
-              child: Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage(
-                      "assets/images/maid/maid3.png",
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SmallText(
-                        text: "Jatin Solanki",
-                        fontWeight: FontWeight.w600,
-                        size: 16,
-                        color: AppColors.mainBlackColor,
-                      ),
-                      SmallText(
-                        text: "#21233",
-                        fontWeight: FontWeight.w400,
-                        size: 14,
-                        color: AppColors.borderColor,
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  const Icon(
-                    Icons.dangerous_outlined,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+        ],
       ),
     );
   }

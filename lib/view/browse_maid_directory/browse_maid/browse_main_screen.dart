@@ -4,6 +4,7 @@ import 'package:wear_work/view/browse_maid_directory/browse_home_screen/browse_h
 import 'package:wear_work/view/browse_maid_directory/browse_maid_before_after_screen/browse_maid_before_after_screen.dart';
 import 'package:wear_work/view/browse_maid_directory/browse_maid_profile_screen/browse_maid_profile_screen.dart';
 import 'package:wear_work/view/browse_maid_directory/browse_maid_search_screen/browse_maid_search_screen.dart';
+import 'package:wear_work/view/browse_maid_directory/browse_post_screen/browse_post_screen.dart';
 
 class BrowseMaidMainScreen extends StatefulWidget {
   const BrowseMaidMainScreen({super.key});
@@ -18,8 +19,9 @@ class _BrowseMaidMainScreenState extends State<BrowseMaidMainScreen> {
   List<Widget> screens = [
     const BrowseMaidHomeScreen(),
     const BrowseMaidSearchScreen(),
+    const BrowsePostScreen(),
     const BrowseMaidBeforeAfterScreen(),
-    const BrowseMaidProfileScreen(),
+     BrowseMaidProfileScreen(),
   ];
   @override
   void initState() {
@@ -37,10 +39,11 @@ class _BrowseMaidMainScreenState extends State<BrowseMaidMainScreen> {
             _currentIndex = index;
           });
         },
-        children: const [
-          BrowseMaidHomeScreen(),
-          BrowseMaidSearchScreen(),
-          BrowseMaidBeforeAfterScreen(),
+        children:  [
+          const BrowseMaidHomeScreen(),
+          const BrowseMaidSearchScreen(),
+          const BrowsePostScreen(),
+          const BrowseMaidBeforeAfterScreen(),
           BrowseMaidProfileScreen(),
         ],
       ),
@@ -78,6 +81,13 @@ class _BrowseMaidMainScreenState extends State<BrowseMaidMainScreen> {
               color: AppColors.mainColor,
             ),
             label: "Search",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.image_aspect_ratio_outlined,
+              color: AppColors.mainColor,
+            ),
+            label: "Post",
           ),
           BottomNavigationBarItem(
             icon: Icon(

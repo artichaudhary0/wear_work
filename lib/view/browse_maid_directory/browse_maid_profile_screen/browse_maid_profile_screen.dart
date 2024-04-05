@@ -2,13 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wear_work/auth/firebase_auth.dart';
+import 'package:wear_work/auth/firestore.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
+import '../../../controller/provider.dart';
+import '../../../model/user_model.dart' as model;
+import '../../login_screen/login_screen.dart';
+
 class BrowseMaidProfileScreen extends StatefulWidget {
-  const BrowseMaidProfileScreen({super.key});
+  String? uid;
+  BrowseMaidProfileScreen({super.key, this.uid});
 
   @override
   State<BrowseMaidProfileScreen> createState() =>
@@ -16,15 +23,61 @@ class BrowseMaidProfileScreen extends StatefulWidget {
 }
 
 class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
+  var userData = {};
+  int postLen = 0;
+  int followers = 0;
+  int following = 0;
+  bool isFollowing = false;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      var postSnap = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      postLen = postSnap.docs.length;
+      userData = userSnap.data()!;
+      followers = userSnap.data()!['followers'].length;
+      following = userSnap.data()!['following'].length;
+      isFollowing = userSnap
+          .data()!['followers']
+          .contains(FirebaseAuth.instance.currentUser!.uid);
+      setState(() {});
+    } catch (e) {
+      // AppExtension.snackBar(
+      //   context,
+      //   e.toString(),
+      // );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   String _selectedValue = '1';
-  AuthRepository authRepository = AuthRepository();
-   String _userName = '';
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  AuthMethods authRepository = AuthMethods();
+  String _userName = '';
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   Future<void> fetchUserName() async {
     try {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       DocumentSnapshot userSnapshot =
-      await _firebaseFirestore.collection('users').doc(uid).get();
+          await _firebaseFirestore.collection('users').doc(uid).get();
       setState(() {
         _userName = userSnapshot['userName'];
       });
@@ -33,9 +86,9 @@ class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    model.UsersModel usersModel = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0),
@@ -48,10 +101,9 @@ class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
               ),
               child: Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 50,
-                    backgroundImage:
-                        AssetImage("assets/images/maid/maid 2.png"),
+                    backgroundImage: NetworkImage(usersModel!.photoUrl),
                   ),
                   const SizedBox(
                     width: 15,
@@ -60,13 +112,13 @@ class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BigText(
-                        text: _userName ?? 'sas',
+                        text: usersModel.username ?? 'sas',
                         color: AppColors.mainBlackColor,
                         fontWeight: FontWeight.w500,
                         size: 20,
                       ),
                       BigText(
-                        text: "#26514",
+                        text: usersModel.bio,
                         color: Colors.grey,
                         fontWeight: FontWeight.w500,
                         size: 16,
@@ -122,7 +174,8 @@ class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
                           buildPopupMenuItem(
                             icon: Icons.menu,
                             text: "Main Menu",
-                            onTap: () =>  Navigator.pushNamed(context, "/jobTypeScreen"),
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/jobTypeScreen"),
                           ),
                           buildPopupMenuItem(
                             icon: Icons.logout,
@@ -145,40 +198,108 @@ class _BrowseMaidProfileScreenState extends State<BrowseMaidProfileScreen> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CountWidget(count: 8, label: "Posts"),
-                  CountWidget(count: 421, label: "Following"),
-                  CountWidget(count: 200, label: "Followers"),
-                ],
-              ),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CountWidget(count: postLen, label: "Posts"),
+                      CountWidget(count: following, label: "Following"),
+                      CountWidget(count: followers, label: "Followers"),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FirebaseAuth.instance.currentUser!.uid == widget.uid
+                        ? OutlinedButton(
+                            child: Text('Sign Out'),
+                            onPressed: () async {
+                              await AuthMethods().signOut;
+                              if (context.mounted) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              }
+                            },
+                          )
+                        : isFollowing
+                            ? OutlinedButton(
+                                child: Text('UnFollow'),
+                                onPressed: () async {
+                                  await FirebaseMethod().followUser(
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    userData['uid'],
+                                  );
+
+                                  setState(() {
+                                    isFollowing = false;
+                                    followers--;
+                                  });
+                                },
+                              )
+                            : OutlinedButton(
+                                child: Text('Follow'),
+                                onPressed: () async {
+                                  await FirebaseMethod().followUser(
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    userData['uid'],
+                                  );
+
+                                  setState(() {
+                                    isFollowing = true;
+                                    followers++;
+                                  });
+                                },
+                              )
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             const Divider(),
             const SizedBox(height: 20),
-            Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  mainAxisExtent: 150,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.deepPurple.shade100,
-                    ),
+            FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('posts')
+                  .where('uid', isEqualTo: widget.uid)
+                  .get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
-            )
+                }
+
+                return GridView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 1.5,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot snap =
+                        (snapshot.data! as dynamic).docs[index];
+
+                    return SizedBox(
+                      child: Image(
+                        image: NetworkImage(snap['photoUrl']),
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/utils/extension.dart';
+import 'package:wear_work/view/browse_maid_directory/change_password_screen/change_password_screen.dart';
 import 'package:wear_work/view/job_type_screen/job_type_screen.dart';
+import 'package:wear_work/view/signup_screen/signup_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
@@ -20,7 +23,53 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isChecked = false;
-  AuthRepository authRepository = AuthRepository();
+  AuthMethods signIn = AuthMethods();
+  bool _isLoading = false;
+
+  void signInMethod() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      String result = await AuthMethods().signInUser(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (result != 'success') {
+        AppExtension.snackBar(context, result);
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const JobTypeScreen();
+            },
+          ),
+        );
+      }
+    } catch (error) {
+      AppExtension.snackBar(
+        context,
+        error.toString(),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void navigateToSignUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignUpScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GradientButton(
                       text: "Log In",
-                      onPressed: () {
-                        authRepository.signIn(
-                          emailController.text.trim(),
-                          passwordController.text.trim(),
-                          context,
-                        );
-                      },
+                      onPressed: signInMethod,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,8 +144,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            // Navigator.pushNamed(
-                            //     context, "/forgetPasswordScreen");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ChangePasswordScreen(),
+                              ),
+                            );
                           },
                           child: SmallText(
                             text: "Forget Password",
@@ -210,8 +258,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>JobTypeScreen()));
-                                // Navigator.pushNamed(context, "/signUpScreen");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpScreen(),
+                                  ),
+                                );
                               },
                           ),
                         ],
