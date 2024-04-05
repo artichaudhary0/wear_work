@@ -4,7 +4,7 @@ import 'package:wear_work/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wear_work/utils/colors.dart';
-import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
+import 'package:wear_work/view/hire_maid_directory/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
@@ -30,6 +30,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/cooking.png',
         'title': 'Cooking',
         'onTap': () {
+          addSkill(Skill(name: "Cooking", description: "Cooking"));
           Navigator.pushNamed(context, "/cookingServiceScreen");
         },
       },
@@ -37,6 +38,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/cleaning.png',
         'title': 'Cleaning',
         'onTap': () {
+          addSkill(Skill(name: "Cleaning", description: "Cleaning"));
           Navigator.pushNamed(context, "/homeCleaningServiceScreen");
         },
       },
@@ -44,6 +46,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/event-cleanup.png',
         'title': 'Event Cleanup',
         'onTap': () {
+          addSkill(Skill(name: "Event Cleanup", description: "Event Cleanup"));
           Navigator.pushNamed(context, "/eventCleaningServiceScreen");
         },
       },
@@ -51,6 +54,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/baby-sitter.png',
         'title': 'Baby Sitter',
         'onTap': () {
+          addSkill(Skill(name: "Baby Sitter", description: "Baby Sitter"));
           Navigator.pushNamed(context, "/babyCareScreen");
         },
       },
@@ -58,6 +62,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/pool-cleanup.png',
         'title': 'Pool Cleanup',
         'onTap': () {
+          addSkill(Skill(name: "Pool Cleanup", description: "Pool Cleanup"));
           Navigator.pushNamed(context, "/poolCleaningServiceScreen");
         },
       },
@@ -65,6 +70,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/elder-care.png',
         'title': 'Elder Care',
         'onTap': () {
+          addSkill(Skill(name: "Elder Care", description: "Elder Care"));
           Navigator.pushNamed(context, "/elderCareScreen");
         },
       },
@@ -72,6 +78,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         'imagePath': 'assets/images/services/vehicle-washing.png',
         'title': 'Vehicle Washing',
         'onTap': () {
+          addSkill(Skill(name: "Vehicle Washing", description: "Vehicle Washing"));
           Navigator.pushNamed(context, "/vehicleWashingScreen");
         },
       },
@@ -218,14 +225,6 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
               const SizedBox(
                 height: 12,
               ),
-              //  SearchFilterRow(
-              //   title: 'Age',
-              //   ageRange: "65 Yr",
-              // ),
-              //  SearchFilterRow(
-              //   title: 'Gender',
-              //   ageRange: "Female",
-              // ),
               const SearchFilterRow(
                 title: 'Age',
                 initialValue: '0-10', // Initial age range
@@ -247,7 +246,6 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
                 initialValue: 'Female', // Initial gender
                 options: ['Male', 'Female', 'Other'], // Gender options
               ),
-
               const SizedBox(
                 height: 12,
               ),
@@ -344,7 +342,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         Step(
           state: StepState.complete,
           isActive: _activeCurrentStep >= 2,
-          title: const Text('Confirm'),
+          title: const Text('Id Proof'),
           content: Column(
             children: [
               buildImageContainer(
@@ -367,9 +365,9 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
         ),
         Step(
           state:
-              _activeCurrentStep <= 1 ? StepState.editing : StepState.complete,
+              _activeCurrentStep <= 1 ? StepState.complete : StepState.editing,
           isActive: _activeCurrentStep >= 1,
-          title: const Text('Address'),
+          title: const Text('Skills'),
           content: Column(
             children: getServiceTiles()
                 .map<Widget>((tile) => GestureDetector(
@@ -410,6 +408,7 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(selectedSkills);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Maid Registration'),

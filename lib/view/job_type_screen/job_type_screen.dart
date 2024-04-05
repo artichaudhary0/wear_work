@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wear_work/view/hire_maid/hire_maid.dart';
+import 'package:wear_work/view/hire_maid_directory/hire_maid.dart';
 import 'package:wear_work/view/job_type_screen/widget/jobtype_tile.dart';
 import 'package:wear_work/widgets/big_text.dart';
 
