@@ -1,16 +1,12 @@
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
+import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/extension.dart';
-
-import '';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/view/hire_maid/widget/search_filter.dart';
 import 'package:wear_work/widgets/big_text.dart';
-
-import '../../utils/app_constants.dart';
-import '../../widgets/small_text.dart';
+import 'package:wear_work/widgets/small_text.dart';
 
 class MaidRegistrationScreen extends StatefulWidget {
   const MaidRegistrationScreen({Key? key}) : super(key: key);
@@ -222,14 +218,36 @@ class _MaidRegistrationScreenState extends State<MaidRegistrationScreen> {
               const SizedBox(
                 height: 12,
               ),
+              //  SearchFilterRow(
+              //   title: 'Age',
+              //   ageRange: "65 Yr",
+              // ),
+              //  SearchFilterRow(
+              //   title: 'Gender',
+              //   ageRange: "Female",
+              // ),
               const SearchFilterRow(
                 title: 'Age',
-                ageRange: "65 Yr",
+                initialValue: '0-10', // Initial age range
+                options: [
+                  '0-10',
+                  '10-20',
+                  '20-30',
+                  '30-40',
+                  '40-50',
+                  '50-60',
+                  '60-70',
+                  '70-80',
+                  '80-90',
+                  '90-100',
+                ], // Age range options
               ),
               const SearchFilterRow(
                 title: 'Gender',
-                ageRange: "Female",
+                initialValue: 'Female', // Initial gender
+                options: ['Male', 'Female', 'Other'], // Gender options
               ),
+
               const SizedBox(
                 height: 12,
               ),

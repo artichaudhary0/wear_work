@@ -19,7 +19,7 @@ class _HireMaidScreenState extends State<HireMaidScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:   CustomAppBar(
+      appBar: CustomAppBar(
         title: "Personalize Search!",
         leading: IconButton(
           onPressed: () {
@@ -39,11 +39,30 @@ class _HireMaidScreenState extends State<HireMaidScreen> {
           children: [
             const SearchFilterRow(
               title: 'Age',
-              ageRange: "20 to 300",
+              initialValue: '20-30', // Initial age range
+              options: [
+                '0-10',
+                '10-20',
+                '20-30',
+                '30-40',
+                '40-50',
+                '50-60',
+                '60-70',
+                '70-80',
+                '80-90',
+                '90-100',
+              ], // Age range options
             ),
             const SearchFilterRow(
               title: 'Religion',
-              ageRange: "Hindu",
+              initialValue: 'Hindu', // Initial gender
+              options: [
+                'Hindu',
+                'Muslim',
+                'Christian',
+                'Sikh',
+                'Other',
+              ], // Gender options
             ),
             BigText(
               text: "Gender",

@@ -87,12 +87,33 @@ class _ElderCareScreenState extends State<ElderCareScreen> {
           children: [
             const SearchFilterRow(
               title: 'Age',
-              ageRange: "65 Yr",
+              initialValue: '40-50', // Initial age range
+              options: [
+                '0-10',
+                '10-20',
+                '20-30',
+                '30-40',
+                '40-50',
+                '50-60',
+                '60-70',
+                '70-80',
+                '80-90',
+                '90-100',
+              ], // Age range options
             ),
             const SearchFilterRow(
               title: 'Gender',
-              ageRange: "Female",
+              initialValue: 'Female', // Initial gender
+              options: ['Male', 'Female', 'Other'], // Gender options
             ),
+            // const SearchFilterRow(
+            //   title: 'Age',
+            //   ageRange: "65 Yr",
+            // ),
+            // const SearchFilterRow(
+            //   title: 'Gender',
+            //   ageRange: "Female",
+            // ),
             BigText(
               text: "Is He/She Bed Ridden?",
               fontWeight: FontWeight.w600,

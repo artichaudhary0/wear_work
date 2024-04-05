@@ -80,11 +80,25 @@ class _BabyCareScreenState extends State<BabyCareScreen> {
             const Divider(),
             const SearchFilterRow(
               title: 'Age',
-              ageRange: "20 to 300",
+              initialValue: '0-1', // Initial age range
+              options: [
+                '0-1',
+                '1-2',
+                '2-3',
+                '3-4',
+                '4-5',
+                '5-6',
+                '6-7',
+                '7-8',
+                '8-9',
+                '9-10',
+                '10+',
+              ],
             ),
             const SearchFilterRow(
               title: 'Gender',
-              ageRange: "Female",
+              initialValue: 'Female', // Initial gender
+              options: ['Male', 'Female', 'Other'], // Gender options
             ),
             const Divider(),
 

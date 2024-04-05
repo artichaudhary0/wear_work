@@ -70,10 +70,10 @@ class _PoolCleaningServiceScreenState extends State<PoolCleaningServiceScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SearchFilterRow(
-              title: "Size of Pool",
-              ageRange: "Medium",
+              title: 'Size of Pool',
+              initialValue: 'Medium', // Initial gender
+              options: ['Small', 'Medium', 'Large'], // Gender options
             ),
-
             BigText(
               text: "Services",
               size: 28,

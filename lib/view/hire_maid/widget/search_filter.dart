@@ -2,14 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
-class SearchFilterRow extends StatelessWidget {
+class SearchFilterRow extends StatefulWidget {
   final String title;
-  final String ageRange;
+  final String initialValue;
+  final List<String> options;
+
   const SearchFilterRow({
     required this.title,
-    super.key,
-    required this.ageRange,
-  });
+    required this.initialValue,
+    required this.options,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _SearchFilterRowState createState() => _SearchFilterRowState();
+}
+
+class _SearchFilterRowState extends State<SearchFilterRow> {
+  late String selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +35,59 @@ class SearchFilterRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmallText(
-            text: title,
+            text: widget.title,
             color: AppColors.mainBlackColor,
             size: 18,
             fontWeight: FontWeight.w400,
           ),
-          Container(
-            width: 120,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.lightBlue,
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: SmallText(
-              text: ageRange,
-              color: AppColors.white,
-              size: 14,
-              fontWeight: FontWeight.w400,
+          GestureDetector(
+            onTap: () {
+              _showOptionsDialog(context);
+            },
+            child: Container(
+              width: 120,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.lightBlue,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: SmallText(
+                text: "$selectedValue  ^",
+                color: AppColors.white,
+                size: 14,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void _showOptionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select ${widget.title}'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(widget.options.length, (index) {
+              final option = widget.options[index];
+              return ListTile(
+                title: Text(option),
+                onTap: () {
+                  setState(() {
+                    selectedValue = option;
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            }),
+          ),
+        );
+      },
     );
   }
 }
