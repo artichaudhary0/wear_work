@@ -1,7 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/utils/extension.dart';
+import 'package:wear_work/view/browse_maid_directory/change_password_screen/change_password_screen.dart';
+import 'package:wear_work/view/job_type_screen/job_type_screen.dart';
+import 'package:wear_work/view/signup_screen/signup_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
@@ -15,7 +20,57 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isChecked = false;
+  AuthMethods signIn = AuthMethods();
+  bool _isLoading = false;
+
+  void signInMethod() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      String result = await AuthMethods().signInUser(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (result != 'success') {
+        AppExtension.snackBar(context, result);
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const JobTypeScreen();
+            },
+          ),
+        );
+      }
+    } catch (error) {
+      AppExtension.snackBar(
+        context,
+        error.toString(),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void navigateToSignUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignUpScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +98,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: emailController,
                       hintText: "Email Address",
                       prefixImage: "assets/app_icons/mail_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: passwordController,
                       hintText: "Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
@@ -60,9 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GradientButton(
                       text: "Log In",
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/locationScreen");
-                      },
+                      onPressed: signInMethod,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,8 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.pushNamed(context, "/forgetPasswordScreen");
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ChangePasswordScreen(),
+                              ),
+                            );
                           },
                           child: SmallText(
                             text: "Forget Password",
@@ -130,50 +191,50 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    GradientButton(
-                      text: "Sign Up With Google",
-                      onPressed: () {},
-                      imageWidget: Container(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    GradientButton(
-                      text: "Sign Up With Apple",
-                      onPressed: () {},
-                      imageWidget: SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
+                    // GradientButton(
+                    //   text: "Sign Up With Google",
+                    //   onPressed: () {},
+                    //   imageWidget: Container(
+                    //     height: 16,
+                    //     width: 16,
+                    //     child: Image.asset(
+                    //       "assets/app_icons/icons8-apple-60.png",
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    //   gradientEndColor: const Color(0xFFf3fdfe),
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.w500,
+                    //   gradientStartColor: const Color(0xFFf3fdfe),
+                    //   textColor: AppColors.mainColor,
+                    //   border: Border.all(
+                    //     color: AppColors.borderColor,
+                    //     width: 1.0,
+                    //     style: BorderStyle.solid,
+                    //   ),
+                    // ),
+                    // GradientButton(
+                    //   text: "Sign Up With Apple",
+                    //   onPressed: () {},
+                    //   imageWidget: SizedBox(
+                    //     height: 16,
+                    //     width: 16,
+                    //     child: Image.asset(
+                    //       "assets/app_icons/icons8-apple-60.png",
+                    //       fit: BoxFit.contain,
+                    //     ),
+                    //   ),
+                    //   gradientEndColor: const Color(0xFFf3fdfe),
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.w500,
+                    //   gradientStartColor: const Color(0xFFf3fdfe),
+                    //   textColor: AppColors.mainColor,
+                    //   border: Border.all(
+                    //     color: AppColors.borderColor,
+                    //     width: 1.0,
+                    //     style: BorderStyle.solid,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -184,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 12,
                           color: AppColors.borderColor,
                         ),
-                        children:  [
+                        children: [
                           const TextSpan(
                             text: "Don’t Have an Account?",
                           ),
@@ -195,9 +256,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 12,
                               color: Colors.blue,
                             ),
-                            recognizer:  TapGestureRecognizer()
+                            recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, "/signUpScreen");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpScreen(),
+                                  ),
+                                );
                               },
                           ),
                         ],

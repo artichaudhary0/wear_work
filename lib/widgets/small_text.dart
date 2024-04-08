@@ -10,6 +10,7 @@ class SmallText extends StatelessWidget {
   double size;
   FontWeight fontWeight;
   double height;
+  TextAlign textAlign;
 
   SmallText({
     super.key,
@@ -18,6 +19,7 @@ class SmallText extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.size = 0,
     this.height = 1.2,
+    this.textAlign = TextAlign.start,
     required this.text,
   });
 
@@ -27,7 +29,7 @@ class SmallText extends StatelessWidget {
       text,
       overflow: overflow,
       maxLines: 100,
-
+      textAlign: textAlign == TextAlign.start ? TextAlign.start : textAlign,
       style: GoogleFonts.poppins(
         color: color,
         fontSize: size == 0 ? 12 : size,

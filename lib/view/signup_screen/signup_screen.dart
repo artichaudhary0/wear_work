@@ -1,7 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/utils/extension.dart';
+import 'package:wear_work/view/login_screen/login_screen.dart';
+import 'package:wear_work/view/login_with_munber/login_with_number.dart';
+import 'package:wear_work/view/splash_screen/splash_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/custom_textfield.dart';
@@ -15,11 +23,74 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController cpasswordController = TextEditingController();
+  Uint8List? _pickedProfileImage;
+  bool _isLoading = false;
+  void selectProfileImage() async {
+    Uint8List pickedImagePath =
+        await AppExtension.pickedImage(imageSource: ImageSource.gallery);
+    if (pickedImagePath != null) {
+      setState(() {
+        _pickedProfileImage = pickedImagePath;
+      });
+    }
+  }
+
+  void signUpMethod() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      String res = await AuthMethods().signUpUser(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        username: usernameController.text.trim(),
+        bio: 'arti',
+        file: _pickedProfileImage!,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (res != 'success') {
+        AppExtension.snackBar(context, res);
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return LoginScreen();
+            },
+          ),
+        );
+      }
+    } catch (error) {
+      AppExtension.snackBar(context, error.toString());
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void navigateToSignIn() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
+  }
+
+  AuthMethods authRepository = AuthMethods();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,24 +110,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Form(
                 child: Column(
                   children: [
+                    Stack(
+                      children: [
+                        _pickedProfileImage != null
+                            ? CircleAvatar(
+                                radius: 64,
+                                backgroundImage: MemoryImage(
+                                  _pickedProfileImage!,
+                                ),
+                              )
+                            : const CircleAvatar(
+                                radius: 64,
+                                backgroundImage:
+                                    AssetImage("assets/app_icons/profile2.png"),
+                              ),
+                        Positioned(
+                          bottom: 0,
+                          right: 5,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.lightBlue),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: selectProfileImage,
+                              icon: const Icon(
+                                color: AppColors.white,
+                                Icons.edit,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: usernameController,
                       hintText: "User name",
                       prefixImage: "assets/app_icons/account_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: emailController,
                       hintText: "Email Address",
                       prefixImage: "assets/app_icons/mail_icon.png",
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: passwordController,
                       hintText: "Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
@@ -64,22 +174,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: cpasswordController,
                       hintText: "Confirm Password",
                       prefixImage: "assets/app_icons/password.png",
                       isPassword: true,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
-                    GradientButton(
-                      text: "Sign Up",
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/locationScreen");
-                      },
-                    ),
+                    _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            ),
+                          )
+                        : GradientButton(
+                            text: "Sign Up",
+                            onPressed: signUpMethod,
+                          ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Row(
                       children: [
@@ -106,55 +221,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     GradientButton(
-                      text: "Sign Up With Google",
-                      onPressed: () {},
-                      imageWidget: Container(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    GradientButton(
-                      text: "Sign Up With Apple",
-                      onPressed: () {},
-                      imageWidget: SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                        text: "Login with Phone Number",
+                        fontSize: 18,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        }),
                     RichText(
                       text: TextSpan(
                         style: GoogleFonts.poppins(
@@ -163,23 +242,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: AppColors.borderColor,
                         ),
                         children: [
-                          TextSpan(
+                          const TextSpan(
                             text: "Already have an account?",
                           ),
                           TextSpan(
-                            text: " Log in",
-                            style: TextStyle(
+                            text: "  Log in",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                               color: Colors.blue,
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, "/loginScreen");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                                // Navigator.pushNamed(context, "/loginScreen");
                               },
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),

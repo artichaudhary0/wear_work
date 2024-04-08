@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final double contentHorizontalPadding;
   final double contentVerticalPadding;
   final bool isPassword;
+  final TextEditingController controller;
   const CustomTextField({
     super.key,
     this.hintText = "Enter details",
@@ -21,6 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.contentHorizontalPadding = 10,
     this.contentVerticalPadding = 12,
     this.isPassword = false,
+    required this.controller,
   });
 
   @override
@@ -38,6 +40,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         fontSize: widget.fontSize,
         color: widget.hintColor,
       ),
+      controller: widget.controller,
       decoration: InputDecoration(
         prefixIcon: Image.asset(widget.prefixImage),
         contentPadding: EdgeInsets.symmetric(
