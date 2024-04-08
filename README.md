@@ -35,8 +35,7 @@ Secure Payments: Make secure payments for maid services through integrated payme
 
 
 
-### Pictures of application 
-
+## Pictures of application 
 
 <img src="https://github.com/artichaudhary0/wear_work/assets/71622834/87e6a231-7803-4e86-988b-3ef7579e30f9" width="200"/>
 <img src="https://github.com/artichaudhary0/wear_work/assets/71622834/0e5bf53d-f8b1-4151-97e7-fc1f489d3ce8" width="200"/>
