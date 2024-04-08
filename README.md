@@ -93,4 +93,10 @@ Special thanks to the creators of asyncc_wallpaper for simplifying the wallpaper
 ## Documentation
 [Wear Work.docx](https://github.com/artichaudhary0/wear_work/files/14902628/Wear.Work.1.docx)
 
+## user flow
+https://www.figma.com/file/vMboJ8XJt2gPK6ISzpIpXM/User-Flow?type=design&node-id=0-1&mode=design&t=01VDusQ4NN4vgL9b-0
+
+## Figma
+https://www.figma.com/file/TojzzGZATFqzvsEo34i88k/Maid-booking-app?type=design&node-id=1-2468&mode=design&t=umoGfSQlA9cWWaB4-0
+
 
