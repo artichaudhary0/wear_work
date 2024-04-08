@@ -8,6 +8,7 @@ import 'package:wear_work/auth/firebase_auth.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/utils/extension.dart';
 import 'package:wear_work/view/login_screen/login_screen.dart';
+import 'package:wear_work/view/login_with_munber/login_with_number.dart';
 import 'package:wear_work/view/splash_screen/splash_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_button.dart';
@@ -180,7 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       isPassword: true,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     _isLoading
                         ? const Center(
@@ -193,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onPressed: signUpMethod,
                           ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Row(
                       children: [
@@ -220,8 +221,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
+                    GradientButton(
+                        text: "Login with Phone Number",
+                        fontSize: 18,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        }),
                     RichText(
                       text: TextSpan(
                         style: GoogleFonts.poppins(

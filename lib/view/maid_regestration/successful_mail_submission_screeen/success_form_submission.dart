@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wear_work/utils/colors.dart';
+import 'package:wear_work/view/browse_maid_directory/browse_maid/browse_main_screen.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/small_text.dart';
 
@@ -77,7 +78,16 @@ class MaidRegestrationSuccessScreen extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            GradientButton(text: "Continue Browsing", onPressed: () {}),
+            GradientButton(
+                text: "Continue Browsing",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BrowseMaidMainScreen(),
+                    ),
+                  );
+                }),
             const SizedBox(
               height: 40,
             ),

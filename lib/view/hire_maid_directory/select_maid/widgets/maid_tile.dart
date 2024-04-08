@@ -50,7 +50,7 @@ class MaidListItem extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage(imageUrl),
+            backgroundImage: NetworkImage(imageUrl),
             minRadius: 10,
             maxRadius: 60,
           ),

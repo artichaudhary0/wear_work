@@ -43,7 +43,7 @@ class _MaidDetailScreenState extends State<MaidDetailScreen> {
           ),
         ),
         title: BigText(
-          text: "Transaction Summary",
+          text: "Maid Summary",
           size: 26,
           fontWeight: FontWeight.w700,
         ),
@@ -168,9 +168,12 @@ class _MaidDetailScreenState extends State<MaidDetailScreen> {
                         ),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(
-                        widget.profileImage,
-                        fit: BoxFit.contain,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          widget.profileImage,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(

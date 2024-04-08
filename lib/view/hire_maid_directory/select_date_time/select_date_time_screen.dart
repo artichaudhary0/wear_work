@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:wear_work/utils/app_constants.dart';
 import 'package:wear_work/utils/colors.dart';
 import 'package:wear_work/utils/global_values.dart';
+import 'package:wear_work/view/hire_maid_directory/select_maid/select_maid-screen.dart';
+import 'package:wear_work/view/hire_maid_directory/transaction_success_screen/transaction_success_screen.dart';
 import 'package:wear_work/widgets/big_text.dart';
 import 'package:wear_work/widgets/custom_appbar.dart';
 import 'package:wear_work/widgets/custom_button.dart';
 import 'package:wear_work/widgets/small_text.dart';
+
+import '../../maid_regestration/successful_mail_submission_screeen/success_form_submission.dart';
 
 class SelectDateAndTime extends StatefulWidget {
   const SelectDateAndTime({super.key});
@@ -208,7 +212,18 @@ class _SelectDateAndTimeState extends State<SelectDateAndTime> {
                 log(selectedWorkingTime.toString());
                 log(selectedDate.toString());
                 log(selectedDuration.toString());
-                Navigator.pushNamed(context, "/selectMaidScreen");
+                currentUserType == UserType.Hiring
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectMaidScreen(),
+                        ),
+                      )
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MaidRegestrationSuccessScreen()));
               },
             ),
             const SizedBox(

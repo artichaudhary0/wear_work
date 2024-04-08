@@ -53,8 +53,8 @@ class _SelectMaidScreenState extends State<SelectMaidScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => MaidDetailScreen(
                                     profileImage:
-                                        "assets/images/maid/maid 1.png",
-                                    name: userMap["userName"],
+                                        userMap['photoUrl'],
+                                    name: userMap["username"],
                                     location: "Mathura",
                                     price: 200,
                                   ),
@@ -62,10 +62,10 @@ class _SelectMaidScreenState extends State<SelectMaidScreen> {
                               );
                             },
                             child: MaidListItem(
-                              imageUrl: "assets/images/maid/maid 1.png",
+                              imageUrl:    userMap['photoUrl'],
                               rating: 5,
                               numReviews: 111,
-                              maidName: userMap["userName"],
+                              maidName: userMap["username"],
                               location: "mathura",
                               age: 22,
                               price: 123,

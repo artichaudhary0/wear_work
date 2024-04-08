@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:wear_work/firebase_options.dart';
 import 'package:wear_work/utils/routes.dart';
 import 'package:wear_work/view/job_type_screen/job_type_screen.dart';
+import 'package:wear_work/view/login_with_munber/login_with_number.dart';
 import 'package:wear_work/view/signup_screen/signup_screen.dart';
 
 import 'controller/provider.dart';
@@ -14,7 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runApp(
     const MyApp(),
   );
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        // initialRoute: "/splashScreen",
+        initialRoute: "/splashScreen",
         onGenerateRoute: OnGenerateRouting.onGenerateRoute,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

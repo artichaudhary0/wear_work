@@ -191,50 +191,50 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    GradientButton(
-                      text: "Sign Up With Google",
-                      onPressed: () {},
-                      imageWidget: Container(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    GradientButton(
-                      text: "Sign Up With Apple",
-                      onPressed: () {},
-                      imageWidget: SizedBox(
-                        height: 16,
-                        width: 16,
-                        child: Image.asset(
-                          "assets/app_icons/icons8-apple-60.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      gradientEndColor: const Color(0xFFf3fdfe),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      gradientStartColor: const Color(0xFFf3fdfe),
-                      textColor: AppColors.mainColor,
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
+                    // GradientButton(
+                    //   text: "Sign Up With Google",
+                    //   onPressed: () {},
+                    //   imageWidget: Container(
+                    //     height: 16,
+                    //     width: 16,
+                    //     child: Image.asset(
+                    //       "assets/app_icons/icons8-apple-60.png",
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    //   gradientEndColor: const Color(0xFFf3fdfe),
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.w500,
+                    //   gradientStartColor: const Color(0xFFf3fdfe),
+                    //   textColor: AppColors.mainColor,
+                    //   border: Border.all(
+                    //     color: AppColors.borderColor,
+                    //     width: 1.0,
+                    //     style: BorderStyle.solid,
+                    //   ),
+                    // ),
+                    // GradientButton(
+                    //   text: "Sign Up With Apple",
+                    //   onPressed: () {},
+                    //   imageWidget: SizedBox(
+                    //     height: 16,
+                    //     width: 16,
+                    //     child: Image.asset(
+                    //       "assets/app_icons/icons8-apple-60.png",
+                    //       fit: BoxFit.contain,
+                    //     ),
+                    //   ),
+                    //   gradientEndColor: const Color(0xFFf3fdfe),
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.w500,
+                    //   gradientStartColor: const Color(0xFFf3fdfe),
+                    //   textColor: AppColors.mainColor,
+                    //   border: Border.all(
+                    //     color: AppColors.borderColor,
+                    //     width: 1.0,
+                    //     style: BorderStyle.solid,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
