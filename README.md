@@ -91,6 +91,6 @@ This app utilizes the Pexels API to fetch high-quality images. We're grateful fo
 Special thanks to the creators of asyncc_wallpaper for simplifying the wallpaper-setting process in our app.
 
 ## Documentation
-[Wear Work (1).docx](https://github.com/artichaudhary0/wear_work/files/14902628/Wear.Work.1.docx)
+[Wear Work.docx](https://github.com/artichaudhary0/wear_work/files/14902628/Wear.Work.1.docx)
 
 
