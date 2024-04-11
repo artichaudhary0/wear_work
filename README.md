@@ -1,4 +1,4 @@
-# Wallpaperify : Maidify: Your Premier Maid Booking Solution
+# Maidify: Your Premier Maid Booking Solution
 
 Welcome to Maidify! Your go-to platform for seamless maid booking services, designed to simplify your life and ensure a clean, comfortable living space. Discover trusted maids, schedule appointments, and manage your cleaning needs effortlessly with our intuitive mobile app.
 
